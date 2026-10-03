@@ -100,6 +100,12 @@ export const MODULES: ModuleMeta[] = [
     actions: ["提交检测", "判定合格", "标记不合格"],
     actionTargets: {"提交检测": "检测中", "判定合格": "已合格", "标记不合格": "不合格"},
     metrics: ["待取样点位", "检测中样品", "不合格点位数"],
+    requiredFields: ["取样点", "电导率", "总有机碳"],
+    numericFields: ["总有机碳"],
+    transitions: {"提交检测": ["待取样"], "判定合格": ["检测中"], "标记不合格": ["检测中"]},
+    exportRole: "水质检验人",
+    conclusionField: "结论",
+    actionConclusions: {"判定合格": "合格", "标记不合格": "不合格"},
   },
   {
     key: "gowning",

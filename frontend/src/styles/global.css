@@ -33,5 +33,24 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .link { border: none; background: none; color: var(--brand); cursor: pointer; padding: 0; }
 .page-foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .error-text { color: #b42318; }
+.notice-text { color: #067647; }
 .status-legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 10px; font-size: 12px; color: var(--muted); }
 .legend-item { background: #eef2f7; border-radius: 999px; padding: 2px 10px; }
+.role-switch { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.role-switch select { border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; background: #fff; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.export-badge { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12px; }
+.export-badge.muted { background: #eef2f7; color: var(--muted); }
+.export-badge.good { background: #dcfae6; color: #067647; }
+.export-badge.bad { background: #fee4e2; color: #b42318; }
+.detail-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 360px; background: #fff; border-left: 1px solid var(--border); box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12); padding: 16px; overflow-y: auto; z-index: 10; }
+.detail-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.detail-head h3 { margin: 0; font-size: 15px; }
+.detail-meta { display: flex; gap: 16px; margin: 0 0 12px; padding: 10px 12px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; }
+.detail-meta dt { font-size: 12px; color: var(--muted); }
+.detail-meta dd { margin: 2px 0 0; font-size: 13px; }
+.detail-form { display: flex; flex-direction: column; gap: 10px; }
+.detail-form input { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+.required-mark { color: #b42318; font-style: normal; margin-left: 2px; }
+.form-hint { margin: 0; font-size: 12px; color: var(--muted); }
+.detail-actions { display: flex; gap: 8px; }
