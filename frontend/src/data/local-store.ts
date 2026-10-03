@@ -1,3 +1,4 @@
+import { migrateEntries } from './migrate'
 import { SEED_ROWS } from './seed'
 import type { EntryRow } from './types'
 
@@ -8,6 +9,12 @@ function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T
 }
 
+function persist(data: Record<string, EntryRow[]>): void {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  }
+}
+
 function readStorage(): Record<string, EntryRow[]> {
   const fallback = clone(SEED_ROWS)
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -15,14 +22,19 @@ function readStorage(): Record<string, EntryRow[]> {
   }
   const raw = window.localStorage.getItem(STORAGE_KEY)
   if (!raw) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback))
+    persist(fallback)
     return fallback
   }
   try {
     const parsed = JSON.parse(raw) as Record<string, EntryRow[]>
-    return { ...fallback, ...parsed }
+    // 存量数据先按旧记录回填迁移，再交给上层用。
+    const migrated = migrateEntries({ ...fallback, ...parsed })
+    if (migrated.changed) {
+      persist(migrated.data)
+    }
+    return migrated.data
   } catch {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback))
+    persist(fallback)
     return fallback
   }
 }
@@ -43,9 +55,7 @@ export function listRows(key: string): EntryRow[] {
 export function saveRows(key: string, rows: EntryRow[]): void {
   const next = { ...allRows(), [key]: rows }
   cache = next
-  if (typeof window !== 'undefined' && window.localStorage) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
-  }
+  persist(next)
 }
 
 export function resetRows(key: string): EntryRow[] {

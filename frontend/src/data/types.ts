@@ -17,6 +17,10 @@ export type ModuleMeta = {
   statuses: string[]
   actions: string[]
   actionTargets: Record<string, string>
+  /** 每个动作允许从哪些状态发起：状态只能一节一节推进，越级直接挡回。 */
+  actionSources: Record<string, string[]>
+  /** 限定可导出的岗位；不填则不设限。 */
+  exportPost?: string
   metrics: string[]
 }
 
